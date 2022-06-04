@@ -1,0 +1,45 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <TargetFramework>net6.0</TargetFramework>
+    <Configurations>Debug-Local;Debug-Trunk;Debug-Servicing;Debug-Stable;Dev;Demo;Production</Configurations>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <IsDebug>true</IsDebug>
+    <IsDebug Condition="'$(Configuration)' == 'Production' Or '$(Configuration)' == 'Demo' Or '$(Configuration)' == 'Dev'">false</IsDebug>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="$(IsDebug)">
+    <DefineConstants>DEBUG</DefineConstants>
+    <Optimize>false</Optimize>
+    <DebugType>full</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="!$(IsDebug)">
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\FamilyBudgetContext.Application\FamilyBudgetContext.Application.Handlers\FamilyBudgetContext.Application.Handlers.csproj" />
+    <ProjectReference Include="..\..\FamilyBudgetContext.Contracts\FamilyBudgetContext.Contracts.Api.Contracts\FamilyBudgetContext.Contracts.Api.Contracts.csproj" />
+    <ProjectReference Include="..\FamilyBudgetContext.Infrastructure.DataAccess\FamilyBudgetContext.Infrastructure.DataAccess.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MassTransit" Version="8.0.3" />
+    <PackageReference Include="MassTransit.RabbitMQ" Version="8.0.3" />
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="10.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.5" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />
+    <PackageReference Include="SignalRSwaggerGen" Version="3.2.1" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.3.1" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>TestPageChat</title>
+</head>
+<body>
+<div id="inputForm">
+    <p>Текст</p>
+    <input type="text" id="message" />
+    <p>Номер комнаты</p>
+    <input type="number" id="roomId" />
+    <p>Номер пользователя</p>
+    <input type="number" id="userId" />
+    <input type="button" id="sendBtn" value="Отправить" />
+    <input type="button" id="connectBtn" value="Подключиться" />
+</div>
+<div id="chatroom"></div>
+<script src="js/dist/browser/signalr.min.js"></script>
+<script>
+    const hubConnection = new signalR.HubConnectionBuilder()
+        .withUrl("/chat")
+        .build();
+    
+
+    hubConnection.on("Send", function (data) {
+
+        let elem = document.createElement("p");
+        if (data.userId === parseInt(document.getElementById("userId").value)){
+            elem.appendChild(document.createTextNode("<i>" + data.userName + " " + data.text + "</i>"));
+        }else{
+            elem.appendChild(document.createTextNode(data.userName + " " + data.text));
+        }
+        
+        let firstElem = document.getElementById("chatroom").firstChild;
+        document.getElementById("chatroom").insertBefore(elem, firstElem);
+
+    });
+
+    hubConnection.on("Join", function (data) {
+        for (let i = 0; i < data.length; i++) {
+
+            let elem = document.createElement("p");
+            
+            if (data[i].userId === parseInt(document.getElementById("userId").value)){
+                elem.appendChild(document.createTextNode("<i>" + data[i].userName + " " + data[i].text + "</i>"));
+            }else{
+                elem.appendChild(document.createTextNode(data[i].userName + " " + data[i].text));
+            }
+
+            let firstElem = document.getElementById("chatroom").firstChild;
+            document.getElementById("chatroom").insertBefore(elem, firstElem);
+        }
+    });
+
+    document.getElementById("connectBtn").addEventListener("click", function (e) {
+        let request =
+            {
+                RoomId: parseInt(document.getElementById("roomId").value)
+            }
+        hubConnection.invoke("Join", request);
+    });
+
+    document.getElementById("sendBtn").addEventListener("click", function (e) {
+        let request =
+            {
+                RoomId: parseInt(document.getElementById("roomId").value),
+                UserId: parseInt(document.getElementById("userId").value),
+                Text: document.getElementById("message").value,
+                Date: Date.now,
+            }
+        hubConnection.invoke("Send", request);
+    });
+
+    hubConnection.start();
+</script>
+</body>
+</html>

@@ -1,0 +1,14 @@
+{
+  "profiles": {
+    "FamilyBudget.Public.Api.Kestrel": {
+      "commandName": "Project",
+      "launchBrowser": false,
+      "launchUrl": "https://famaly-budget/swagger",
+      "environmentVariables": {
+        "ASPNETCORE_URLS": "http://+:63101",
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "httpPort": 63101
+    }
+  }
+}

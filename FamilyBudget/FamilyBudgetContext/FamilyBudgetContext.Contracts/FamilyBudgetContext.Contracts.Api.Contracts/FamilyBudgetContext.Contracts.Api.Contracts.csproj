@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Configurations>Debug;Release;Debug-Local;Debug-Trunk;Debug-Servicing;Debug-Stable;Dev;Demo;Production</Configurations>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <PackageId>FamilyBudgetContext.Contracts.Api.Contracts</PackageId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\FamilyBudgetContext.Domain\FamilyBudgetContext.Domain.Domain\FamilyBudgetContext.Domain.Domain.csproj" />
+    <ProjectReference Include="..\FamilyBudgetContext.Contracts.Shared.Contracts\FamilyBudgetContext.Contracts.Shared.Contracts\FamilyBudgetContext.Contracts.Shared.Contracts.csproj" />
+  </ItemGroup>
+
+</Project>

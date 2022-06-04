@@ -1,0 +1,46 @@
+version: "3.7"
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: FamilyBudget/FamilyBudgetContext/FamilyBudgetContext.Hosts/FamilyBudgetContext.Host.Public.Api/Dockerfile
+    ports:
+      - 80:80
+    environment:
+      - ConnectionStringsDocker=Server=postgres;Database=FamilyBudget;Username=FamilyUser;Password=135531;Port=5432
+      - ASPNETCORE_URLS=http://+:80
+    depends_on:
+      - "postgres"
+      - "rabbitmq"
+    volumes:
+      - ./https:/https:ro
+
+  emailservice:
+    build:
+      context: .
+      dockerfile: EmailService/Dockerfile
+    depends_on:
+      - "rabbitmq"
+
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    container_name: 'rabbitmq'
+    ports:
+        - 5672:5672
+        - 15672:15672
+
+  postgres:
+    image: "postgres"
+    restart: always
+    environment:
+      - POSTGRES_USER=FamilyUser
+      - POSTGRES_PASSWORD=135531
+      - POSTGRES_DB=FamilyBudget
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+
+volumes:
+  postgres_data:

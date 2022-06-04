@@ -1,0 +1,50 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <TargetFramework>net6.0</TargetFramework>
+    <Configurations>Debug-Local;Debug-Trunk;Debug-Servicing;Debug-Stable;Dev;Demo;Production</Configurations>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <AssemblyName>FamilyBudgetContext.Application.AppServices</AssemblyName>
+    <RootNamespace>FamilyBudgetContext.Application.AppServices</RootNamespace>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <IsDebug>true</IsDebug>
+    <IsDebug Condition="'$(Configuration)' == 'Production' Or '$(Configuration)' == 'Demo' Or '$(Configuration)' == 'Dev'">false</IsDebug>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="$(IsDebug)">
+    <DefineConstants>DEBUG</DefineConstants>
+    <Optimize>false</Optimize>
+    <DebugType>full</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="!$(IsDebug)">
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="11.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.SignalR" Version="1.1.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="6.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="6.0.0" />
+    <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="5.6.0" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="5.6.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\CommonContext\Common.Application\Common.Application.AppServices\Common.Application.AppServices.csproj" />
+    <ProjectReference Include="..\..\FamilyBudgetContext.Contracts\FamilyBudgetContext.Contracts.Api.Contracts\FamilyBudgetContext.Contracts.Api.Contracts.csproj" />
+    <ProjectReference Include="..\..\FamilyBudgetContext.Domain\FamilyBudgetContext.Domain.Domain\FamilyBudgetContext.Domain.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="User" />
+  </ItemGroup>
+
+</Project>

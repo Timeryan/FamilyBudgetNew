@@ -1,0 +1,67 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Configurations>Debug-Local;Debug-Trunk;Debug-Servicing;Debug-Stable;Dev;Demo;Production</Configurations>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <IsTransformWebConfigDisabled>true</IsTransformWebConfigDisabled>
+    <AssemblyName>FamilyBudgetContext.Host.Public.Api</AssemblyName>
+    <RootNamespace>FamilyBudgetContext.Host.Public.Api</RootNamespace>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <IsDebug>true</IsDebug>
+    <IsDebug Condition="'$(Configuration)' == 'Production' Or '$(Configuration)' == 'Demo' Or '$(Configuration)' == 'Dev'">false</IsDebug>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
+
+  <!-- Details:
+       https://docs.microsoft.com/en-us/visualstudio/containers/container-msbuild-properties?view=vs-2019
+  -->
+  <PropertyGroup>
+    <DockerComposeProjectPath>..\..\docker-compose.dcproj</DockerComposeProjectPath>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <DockerfileContext>..\..</DockerfileContext>
+    <ContainerDevelopmentMode Condition="$(IsDebug)">Fast</ContainerDevelopmentMode>
+    <DockerfileRunArguments>-e ASPNETCORE_ENVIRONMENT=$(Configuration)</DockerfileRunArguments>
+    <DockerfileBuildArguments>--build-arg configuration=$(Configuration)</DockerfileBuildArguments>
+    <UserSecretsId>d205f67a-05cd-4b57-9e00-b9d60c6fdb27</UserSecretsId>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="$(IsDebug)">
+    <DefineConstants>DEBUG</DefineConstants>
+    <Optimize>false</Optimize>
+    <DebugType>full</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="!$(IsDebug)">
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MediatR" Version="10.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.7" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="4.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning.ApiExplorer" Version="4.1.1" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.9.10" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.1" />
+    <PackageReference Include="Serilog" Version="2.9.0" />
+    <PackageReference Include="Serilog.AspNetCore" Version="3.2.0" />
+    <PackageReference Include="Serilog.Settings.Configuration" Version="3.1.0" />
+    <PackageReference Include="Serilog.Sinks.Async" Version="1.4.0" />
+    <PackageReference Include="Serilog.Sinks.Console" Version="3.1.1" />
+    <PackageReference Include="Serilog.Sinks.Debug" Version="1.0.1" />
+    <PackageReference Include="Serilog.Sinks.Elasticsearch" Version="8.0.1" />
+    <PackageReference Include="Serilog.Sinks.File" Version="4.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\FamilyBudgetContext.Infrastructure\FamilyBudgetContext.Infrastructure.ComponentRegistrar\FamilyBudgetContext.Infrastructure.ComponentRegistrar.csproj" />
+  </ItemGroup>
+
+</Project>

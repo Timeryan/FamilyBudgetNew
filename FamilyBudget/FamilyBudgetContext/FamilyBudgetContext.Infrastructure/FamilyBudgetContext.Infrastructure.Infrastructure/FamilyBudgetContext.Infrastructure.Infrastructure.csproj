@@ -1,0 +1,32 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <TargetFramework>net6.0</TargetFramework>
+    <Configurations>Debug-Local;Debug-Trunk;Debug-Servicing;Debug-Stable;Dev;Demo;Production</Configurations>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <PackageId>FamilyBudgetContext.Infrastructure.Infrastructure</PackageId>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <IsDebug>true</IsDebug>
+    <IsDebug Condition="'$(Configuration)' == 'Production' Or '$(Configuration)' == 'Demo' Or '$(Configuration)' == 'Dev'">false</IsDebug>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="$(IsDebug)">
+    <DefineConstants>DEBUG</DefineConstants>
+    <Optimize>false</Optimize>
+    <DebugType>full</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="!$(IsDebug)">
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+
+  <ItemGroup>
+  </ItemGroup>
+</Project>

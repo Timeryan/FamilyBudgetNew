@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="MailKit" Version="3.2.0" />
+      <PackageReference Include="MassTransit" Version="8.0.3" />
+      <PackageReference Include="MassTransit.Contracts" Version="1.0.0" />
+      <PackageReference Include="MassTransit.RabbitMQ" Version="8.0.3" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\Common.Contracts\Common.Contracts.Publisher.Contracts\Common.Contracts.Publisher.Contracts.csproj" />
+      <ProjectReference Include="..\..\Common.Infrastructure\Common.Infrastructure\Common.Infrastucture.Infrastructure\Common.Infrastucture.Infrastructure.csproj" />
+    </ItemGroup>
+
+</Project>
